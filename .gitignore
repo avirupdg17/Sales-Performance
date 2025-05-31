@@ -1,5 +1,7 @@
 backend/__pycache__/
 backend/venv/
+*__pycache__*
+
 frontend/salesPerformance/.angular
 frontend/salesPerformance/.vscode
 frontend/salesPerformance/node_modules
