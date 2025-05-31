@@ -1,0 +1,50 @@
+{
+  "users": [
+    {
+      "name": "Ravi Kumar",
+      "photo": null,
+      "username": "ravi.k",
+      "password": "ravi123",
+      "role": "ASC",
+      "email": "ravi.k@example.com",
+      "phone_number": "9876543210"
+    },
+    {
+      "name": "Sneha Mehra",
+      "photo": null,
+      "username": "sneha.m",
+      "password": "sneha123",
+      "role": "Distributor",
+      "email": "sneha.m@example.com",
+      "phone_number": "9876500000"
+    }
+  ],
+  "performance": [
+    {
+      "user_id": 1,
+      "month": "2024-03",
+      "gross": 120,
+      "mnp": 40,
+      "jpipo": 15,
+      "mdsso": 10,
+      "fwa": 8,
+      "sim_billing": 60,
+      "jio_mnp": 5,
+      "site_visits": 12,
+      "activations": 18
+    },
+    {
+      "user_id": 2,
+      "month": "2024-03",
+      "gross": 140,
+      "mnp": 50,
+      "jpipo": 10,
+      "mdsso": 7,
+      "fwa": 6,
+      "sim_billing": 45,
+      "jio_mnp": 4,
+      "site_visits": 10,
+      "activations": 15
+    }
+  ]
+}

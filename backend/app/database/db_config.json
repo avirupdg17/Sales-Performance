@@ -1,0 +1,26 @@
+{
+  "users": [
+    "id INTEGER PRIMARY KEY AUTOINCREMENT",
+    "name TEXT",
+    "photo BLOB",
+    "username TEXT UNIQUE",
+    "password TEXT",
+    "role TEXT",
+    "email TEXT",
+    "phone TEXT"
+  ],
+  "performance": [
+    "id INTEGER PRIMARY KEY AUTOINCREMENT",
+    "user_id INTEGER",
+    "month TEXT",
+    "gross INTEGER",
+    "mnp INTEGER",
+    "jpipo INTEGER",
+    "mdsso INTEGER",
+    "fwa INTEGER",
+    "sim_billing INTEGER",
+    "jio_mnp INTEGER",
+    "site_visits INTEGER",
+    "activations INTEGER"
+  ]
+}
