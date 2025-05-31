@@ -24,14 +24,14 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
 
 # Pydantic model
 class LoginRequest(BaseModel):
-    username: str
+    phone: str
     password: str
     role: str
 
 # ✅ Authenticate using database
-def verify_user_db(username: str, password: str, role: str):
+def verify_user_db(phone: str, password: str, role: str):
     with SalesDB() as db:
-        users = db.get_records("users", [("username", "=", username)])
+        users = db.get_records("users", [("phone", "=", phone)])
         if not users:
             return False
         user = users[0]
@@ -50,18 +50,18 @@ def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
 # Login endpoint
 @router.post("/login")
 async def login(login_req: LoginRequest):
-    username = login_req.username
+    phone = login_req.phone
     password = login_req.password
     role = login_req.role
 
-    if not verify_user_db(username, password, role):
+    if not verify_user_db(phone, password, role):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Incorrect username, password or role",
+            detail="Incorrect phone, password or role",
             headers={"WWW-Authenticate": "Bearer"},
         )
 
-    access_token = create_access_token(data={"sub": username, "role": role})
+    access_token = create_access_token(data={"sub": phone, "role": role})
     return {"access_token": access_token, "token_type": "bearer"}
 
 # Get user from JWT
@@ -73,10 +73,10 @@ def get_current_user(token: str = Depends(oauth2_scheme)):
     )
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-        username: str = payload.get("sub")
+        phone: str = payload.get("sub")
         role: str = payload.get("role")
-        if username is None or role is None:
+        if phone is None or role is None:
             raise credentials_exception
-        return {"username": username, "role": role}
+        return {"phone": phone, "role": role}
     except JWTError:
         raise credentials_exception

@@ -12,7 +12,7 @@
   "performance": [
     "id INTEGER PRIMARY KEY AUTOINCREMENT",
     "user_id INTEGER",
-    "month TEXT",
+    "date TEXT",                  
     "gross INTEGER",
     "mnp INTEGER",
     "jpipo INTEGER",
@@ -21,6 +21,14 @@
     "sim_billing INTEGER",
     "jio_mnp INTEGER",
     "site_visits INTEGER",
-    "activations INTEGER"
+    "activations INTEGER",
+    "m0_incentive INTEGER",
+    "m1_incentive INTEGER",
+    "m2_incentive INTEGER",
+    "promoter TEXT",
+    "distributor TEXT",
+    "role TEXT",
+    "zsm TEXT",
+    "tsm TEXT"
   ]
 }

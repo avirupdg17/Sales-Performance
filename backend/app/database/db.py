@@ -5,7 +5,7 @@ import base64
 
 
 class SalesDB:
-    def __init__(self):
+    def __init__(self, populate=False):  # Add optional flag
         base_dir = os.path.dirname(os.path.abspath(__file__))
 
         db_config_path = os.path.join(base_dir, "db_config.json")
@@ -22,7 +22,8 @@ class SalesDB:
         self.db_content_path = db_content_path
 
         self.create_all_tables()
-        self.populate_tables()
+        if populate:  # Only populate if flag is True
+            self.populate_tables()
 
     def __enter__(self):
         return self
@@ -131,8 +132,8 @@ class SalesDB:
         self.cursor.execute(delete_query, params)
         self.connection.commit()
 
-    def get_user_profile(self, username: str):
-        self.cursor.execute("SELECT name, phone, photo FROM users WHERE username=?", (username,))
+    def get_user_profile(self, phone: str):
+        self.cursor.execute("SELECT name, phone, photo FROM users WHERE phone=?", (phone,))
         row = self.cursor.fetchone()
         if row:
             name, phone, photo = row["name"], row["phone"], row["photo"]
@@ -140,7 +141,7 @@ class SalesDB:
             return {"name": name, "phone": phone, "photo": photo_base64}
         return None
 
-    def update_user_profile(self, username: str, update_data: dict):
+    def update_user_profile(self, phone: str, update_data: dict):
         fields = []
         values = []
         for key, value in update_data.items():
@@ -152,14 +153,14 @@ class SalesDB:
                 values.append(value)
         if not fields:
             return
-        values.append(username)
-        sql = f"UPDATE users SET {', '.join(fields)} WHERE username=?"
+        values.append(phone)
+        sql = f"UPDATE users SET {', '.join(fields)} WHERE phone=?"
         self.cursor.execute(sql, tuple(values))
         self.connection.commit()
 
 
 # Quick test if needed
 if __name__ == "__main__":
-    with SalesDB() as sales_db:
+    with SalesDB(populate=True) as sales_db:
         records = sales_db.get_records("performance")
         print(records)

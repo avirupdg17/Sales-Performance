@@ -6,3 +6,4 @@ pydantic
 openpyxl
 python-jose
 python-multipart
+pandas

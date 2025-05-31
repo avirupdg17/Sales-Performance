@@ -1,19 +1,47 @@
 .login-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-  }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  padding: 1rem; // Add padding for small screen breathing space
+  background-color: #f5f5f5; // Optional: subtle background for contrast
+}
 
-.flex-center{
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-.column-flex{
-    display: flex;
-    flex-direction: column;
+
+.column-flex {
+  display: flex;
+  flex-direction: column;
 }
-.p-20{
-    padding: 20px;
+
+.p-20 {
+  padding: 20px;
+}
+
+/* 🔹 New additions for responsive and polished layout */
+
+.login-card {
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); // Optional: card elevation
+  border-radius: 8px;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.full-width {
+  width: 100%;
+}
+
+@media (max-width: 480px) {
+  .login-card {
+    padding: 1rem !important; // More padding on small screens
+  }
 }
