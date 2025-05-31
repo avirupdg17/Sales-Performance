@@ -5,11 +5,10 @@ import base64
 
 
 class SalesDB:
-    def __init__(self, populate=False):  # Add optional flag
+    def __init__(self):
         base_dir = os.path.dirname(os.path.abspath(__file__))
 
         db_config_path = os.path.join(base_dir, "db_config.json")
-        db_content_path = os.path.join(base_dir, "db_content.json")
         db_file_path = os.path.join(base_dir, "sales.db")
 
         with open(db_config_path, "r") as f:
@@ -19,11 +18,7 @@ class SalesDB:
         self.connection.row_factory = sqlite3.Row  # Enable dict-style rows
         self.cursor = self.connection.cursor()
 
-        self.db_content_path = db_content_path
-
         self.create_all_tables()
-        if populate:  # Only populate if flag is True
-            self.populate_tables()
 
     def __enter__(self):
         return self
@@ -47,19 +42,6 @@ class SalesDB:
                 self.cursor.execute(create_table_string)
             except Exception as e:
                 print("Exception:", e)
-
-    def populate_tables(self):
-        with open(self.db_content_path, "r") as f:
-            table_rows = json.load(f)
-
-        for table in table_rows:
-            # Clear all existing rows first to refresh data
-            self.cursor.execute(f"DELETE FROM {table};")
-            self.connection.commit()
-
-            for row in table_rows[table]:
-                normalized_row = {k.lower(): v for k, v in row.items()}
-                self.add_record(table, normalized_row)
 
     def add_record(self, table_name, info):
         table_cols = [col.split()[0] for col in self.table_schemas[table_name]][1:]
@@ -161,6 +143,6 @@ class SalesDB:
 
 # Quick test if needed
 if __name__ == "__main__":
-    with SalesDB(populate=True) as sales_db:
-        records = sales_db.get_records("performance")
+    with SalesDB() as sales_db:
+        records = sales_db.get_records("users")
         print(records)

@@ -12,7 +12,7 @@ def parse_excel(file: BytesIO, kpi_date: datetime) -> Dict[str, List[Dict]]:
         perf_df = df["Performance"].fillna(0)
         for _, row in perf_df.iterrows():
             performance.append({
-                "user_id": int(row.get("user_id", 0)),
+                "user_id": int(row.get("Mobile Number", 0)),
                 "gross": row.get("Gross", 0),
                 "mnp": row.get("MNP", 0),
                 "jpipo": row.get("J PIPO", 0),

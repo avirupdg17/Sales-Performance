@@ -30,7 +30,13 @@ async def upload_excel(
     try:
         # Pass the kpi_date to parse_excel
         parsed = parse_excel(BytesIO(contents), kpi_date)
-        print(parsed, flush=True)
+        print("DEBUG parsed data:", parsed)   # DEBUG LINE HERE
+
+        if not parsed.get("performance"):
+            print("DEBUG: No performance data found in the Excel file.")
+        else:
+            print(f"DEBUG: Found {len(parsed['performance'])} performance records.")
+
         with SalesDB() as db:
             for perf in parsed["performance"]:
                 db.add_record("performance", perf)
