@@ -1,0 +1,19 @@
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+
+.flex-center{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.column-flex{
+    display: flex;
+    flex-direction: column;
+}
+.p-20{
+    padding: 20px;
+}

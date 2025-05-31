@@ -1,0 +1,46 @@
+
+.docs-navbar-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 8px 16px;
+  background: var(--mat-sys-primary-container);
+  color: var(--mat-sys-primary);
+  > .mat-mdc-button {
+    &:last-child {
+      margin-left: auto;
+    }
+  }
+
+  .docs-navbar-header-item-selected {
+    background: color-mix(in srgb, var(--mat-sys-primary) 10%, transparent);
+  }
+}
+  
+.mat-mdc-icon-button {
+  color: inherit;
+}
+
+.docs-github-logo,
+app-logo {
+  margin-right: 8px;
+  width: 24px;
+  height: 24px;
+}
+
+.docs-flex-spacer {
+  flex-grow: 1;
+}
+
+.docs-navbar-link {
+  text-decoration: inherit;
+  flex: 1;
+}
+
+.docs-navbar {
+  display: none;
+}
+
+.docs-navbar-show-small {
+  display: none;
+}
