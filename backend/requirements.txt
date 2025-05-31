@@ -4,3 +4,5 @@ python-jose[cryptography]
 passlib[bcrypt]
 pydantic
 openpyxl
+python-jose
+python-multipart

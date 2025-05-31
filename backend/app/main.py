@@ -12,10 +12,20 @@ from app.auth import (
 
 app = FastAPI(debug=True)
 
-# Public root endpoint
-@app.get("/")
-def read_root():
-    return {"message": "hello"}
+from fastapi.middleware.cors import CORSMiddleware
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:4200"],  # or ["*"] for all
+    allow_credentials=True,
+    allow_methods=["*"],  # allows all HTTP methods
+    allow_headers=["*"],  # allows all headers
+)
+
+# # Public root endpoint
+# @app.get("/")
+# def read_root():
+#     return {"message": "hello"}
 
 # Sample performance fetch endpoint (from database)
 @app.get("/performance")
