@@ -52,14 +52,13 @@ class SalesDB:
             table_rows = json.load(f)
 
         for table in table_rows:
-            query = f"SELECT COUNT(*) FROM {table};"
-            self.cursor.execute(query)
-            table_row_count = self.cursor.fetchone()[0]
+            # Clear all existing rows first to refresh data
+            self.cursor.execute(f"DELETE FROM {table};")
+            self.connection.commit()
 
-            if table_row_count == 0:
-                for row in table_rows[table]:
-                    normalized_row = {k.lower(): v for k, v in row.items()}
-                    self.add_record(table, normalized_row)
+            for row in table_rows[table]:
+                normalized_row = {k.lower(): v for k, v in row.items()}
+                self.add_record(table, normalized_row)
 
     def add_record(self, table_name, info):
         table_cols = [col.split()[0] for col in self.table_schemas[table_name]][1:]

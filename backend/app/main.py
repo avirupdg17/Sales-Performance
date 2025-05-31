@@ -2,6 +2,7 @@ from fastapi import APIRouter, FastAPI, Depends, HTTPException, status
 from app.auth import get_current_user
 from app.profile import router as profile_router
 from app.database.db import SalesDB
+from app.routers import upload_excel
 from app.auth import (
     router as auth_router,
     SECRET_KEY,
@@ -9,7 +10,7 @@ from app.auth import (
     get_current_user  
 )
 
-app = FastAPI()
+app = FastAPI(debug=True)
 
 # Public root endpoint
 @app.get("/")
@@ -54,3 +55,5 @@ def list_users():
         # Hide passwords for safety if you want
       
         return users
+
+app.include_router(upload_excel.router)
