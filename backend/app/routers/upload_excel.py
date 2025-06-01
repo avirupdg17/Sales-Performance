@@ -11,39 +11,45 @@ router = APIRouter()
 @router.post("/upload-excel")
 async def upload_excel(
     file: UploadFile = File(...),
-    date: str = Form(...),  #Added this line to accept the date as form data
+    date: str = Form(...),
     current_user: dict = Depends(get_current_user)
 ):
     if current_user["role"].lower() != "admin":
-         raise HTTPException(status_code=403, detail="Only Admin can upload Excel data.")
+        raise HTTPException(status_code=403, detail="Only Admin can upload Excel data.")
 
-    # Validate date format
     try:
         kpi_date = datetime.strptime(date, "%Y-%m-%d")
     except ValueError:
         raise HTTPException(status_code=400, detail="Invalid date format. Use YYYY-MM-DD")
 
     contents = await file.read()
-    encoded = base64.b64encode(contents).decode("utf-8")
-    # return {"contents": encoded}
 
     try:
-        # Pass the kpi_date to parse_excel
         parsed = parse_excel(BytesIO(contents), kpi_date)
-        print("DEBUG parsed data:", parsed)   # DEBUG LINE HERE
-
-        if not parsed.get("performance"):
-            print("DEBUG: No performance data found in the Excel file.")
-        else:
-            print(f"DEBUG: Found {len(parsed['performance'])} performance records.")
 
         with SalesDB() as db:
             for perf in parsed["performance"]:
+                user_phone = perf.pop("user_phone", None)
+                if not user_phone:
+                    continue  # skip if no phone
+
+                # Lookup user_id by phone
+                user_records = db.get_records("users", [("phone", "=", user_phone)])
+                if not user_records:
+                    # Optionally: skip or raise error for unknown users
+                    continue
+                user_id = user_records[0]["id"]
+
+                # Replace user_phone with user_id
+                perf["user_id"] = user_id
+
+                # Now insert the performance record
                 db.add_record("performance", perf)
 
             return {
                 "message": "Excel data uploaded successfully.",
                 "parsed_data": db.get_records("performance")
             }
+
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"Error parsing Excel: {e}")
