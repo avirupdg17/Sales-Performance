@@ -11,7 +11,7 @@
   ],
   "performance": [
     "id INTEGER PRIMARY KEY AUTOINCREMENT",
-    "user_id INTEGER",
+    "user_id TEXT",
     "date TEXT",                  
     "gross INTEGER",
     "mnp INTEGER",

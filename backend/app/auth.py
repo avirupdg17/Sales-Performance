@@ -17,7 +17,7 @@ router = APIRouter()
 # Constants for JWT
 SECRET_KEY = "your-secret-key"  # Replace with a strong secret key in production
 ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = 60
+ACCESS_TOKEN_EXPIRE_MINUTES = 120
 
 # OAuth2 scheme
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
