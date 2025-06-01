@@ -11,11 +11,11 @@ router = APIRouter()
 @router.post("/upload-excel")
 async def upload_excel(
     file: UploadFile = File(...),
-    date: str = Form(...),  # Added this line to accept the date as form data
-    # current_user: dict = Depends(get_current_user)
+    date: str = Form(...),  #Added this line to accept the date as form data
+    current_user: dict = Depends(get_current_user)
 ):
-    # if current_user["role"].lower() != "admin":
-    #     raise HTTPException(status_code=403, detail="Only Admin can upload Excel data.")
+    if current_user["role"].lower() != "admin":
+         raise HTTPException(status_code=403, detail="Only Admin can upload Excel data.")
 
     # Validate date format
     try:
