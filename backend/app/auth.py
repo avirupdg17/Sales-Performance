@@ -28,7 +28,7 @@ class LoginRequest(BaseModel):
     password: str
     role: str
 
-# ✅ Authenticate using database
+# Authenticate using database
 def verify_user_db(phone: str, password: str, role: str):
     with SalesDB() as db:
         users = db.get_records("users", [("phone", "=", phone)])

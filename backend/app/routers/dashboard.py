@@ -3,30 +3,8 @@ from datetime import datetime
 from collections import defaultdict
 from app.auth import get_current_user
 from app.database.db import SalesDB
-
+from app.utils.common_methods import ROLE_KPIS, MONTH_MAP, get_last_3_months
 router = APIRouter()
-
-ROLE_KPIS = {
-    "ASC": ["gross", "mnp", "mdsso", "fwa", "sim_billing", "jio_mnp"],
-    "Distributor": ["gross", "mnp", "jpipo", "mdsso", "fwa", "jio_mnp"],
-    "Promoter": ["gross", "mnp", "jpipo", "site_visits", "jio_mnp"],
-    "XFE": ["mnp", "site_visits", "activations", "jio_mnp"]
-}
-
-MONTH_MAP = {
-    1: "January", 2: "February", 3: "March", 4: "April", 5: "May",
-    6: "June", 7: "July", 8: "August", 9: "September", 10: "October",
-    11: "November", 12: "December"
-}
-
-def get_last_3_months():
-    today = datetime.today()
-    months = []
-    for i in range(2, -1, -1):
-        m = (today.month - i - 1) % 12 + 1
-        y = today.year if today.month - i > 0 else today.year - 1
-        months.append((y, m))
-    return months
 
 @router.get("/dashboard")
 def get_dashboard(current_user: dict = Depends(get_current_user)):
