@@ -5,6 +5,7 @@ from app.profile import router as profile_router
 from app.database.db import SalesDB
 from app.routers import upload_excel
 from app.auth import router as auth_router
+from app.routers import dashboard
 
 app = FastAPI(debug=True)
 
@@ -54,3 +55,4 @@ app.include_router(auth_router)
 app.include_router(profile_router)
 app.include_router(upload_excel.router)
 app.include_router(test_router)
+app.include_router(dashboard.router)

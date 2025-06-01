@@ -39,7 +39,7 @@ def get_dashboard(current_user: dict = Depends(get_current_user)):
             raise HTTPException(status_code=404, detail="User not found")
 
         user = users[0]
-        user_id = user["id"]
+        user_id = phone  # ✅ use phone number as user_id
         role = user["role"].lower()
 
         if role not in ROLE_KPIS:
@@ -58,7 +58,7 @@ def get_dashboard(current_user: dict = Depends(get_current_user)):
             try:
                 date_obj = datetime.strptime(row["date"], "%Y-%m-%d")
                 ym = (date_obj.year, date_obj.month)
-                uid = row["user_id"]
+                uid = row["user_id"]  # phone number
                 if ym in months:
                     for k in kpis:
                         user_month_data[(uid, ym)][k] += row.get(k, 0) or 0
@@ -72,7 +72,7 @@ def get_dashboard(current_user: dict = Depends(get_current_user)):
             month_users = {}
             for row in all_data:
                 if row.get("date", "").startswith(f"{y}-{m:02d}") and row["role"].lower() == role:
-                    uid = row["user_id"]
+                    uid = row["user_id"]  # phone number
                     month_users.setdefault(uid, {"incentive": 0, "jio_mnp": 0})
                     month_users[uid]["incentive"] += row.get(key, 0) or 0
                     month_users[uid]["jio_mnp"] += row.get("jio_mnp", 0) or 0
