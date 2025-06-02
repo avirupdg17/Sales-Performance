@@ -37,7 +37,7 @@ export class Login {
           this.router.navigate(['home/user/dashboard']); // Navigate to the dashboard after successful login
         }
         else{
-          this.router.navigate(['home/admin/asc']); // Navigate to the ASC page for Admin role
+          this.router.navigate(['home/admin/']); // Navigate to the ASC page for Admin role
         }
       },
       error: (error) => {

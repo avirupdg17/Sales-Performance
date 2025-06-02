@@ -1,0 +1,23 @@
+<form [formGroup]="uploadForm" class="upload-form">
+    <div class="filedrop-width flipdrop-detail" (dragover)="preventDefaultAndStopPropagation($event)" 
+    (dragLeave)="preventDefaultAndStopPropagation($event)" (drop)="preventDefaultAndStopPropagation($event)">
+        <div class="file-drop" (drop)="fileDroppedEvent($event)">
+            <div class="padding width-60 whitespace-nowrap">
+                <div>
+                    <mat-icon class="upload-icon">cloud_upload</mat-icon>
+                </div>
+            </div>
+            <div class="file-upload-section">
+                <span class="upload-data">Drag and drop your file here or click to select</span>
+                <input #fileInput type="file" name="fileSel" (change)="fileDroppedEvent($event)"/>
+                <input type="date" class="date-picker" name="selectedDate" required formControlName="selectedDate">
+                <span class="click-here" (click)="clearSelection(fileInput);fileInput.click();">
+                    Click here to browse and upload file</span>
+                <button mat-raised-button color="primary" [disabled]="!uploadForm.valid" (click)="uploadFile()">
+                        Upload
+                      </button>
+            </div>
+           
+        </div>
+    </div>
+</form>

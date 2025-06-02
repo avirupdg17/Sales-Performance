@@ -1,0 +1,36 @@
+.filedrop-width{
+    margin: 5px;
+}
+.whitespace-nowrap {
+    white-space: nowrap;
+}
+.flipdrop-detail{
+    margin:30px;
+    border-radius: 4px;
+    opacity: 1;
+    
+}
+.file-drop{
+    text-align: center;
+    padding:50px 0px;
+}
+.click-here{
+    color: var(--mat-sys-primary);
+    font-size: 14px;
+    cursor: pointer;
+}
+.upload-data{
+    font-size: 14px;
+    color: #666;
+}
+.upload-icon{
+    color:#666;
+    opacity: 1;
+}
+.file-upload-section{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap:10px;
+}

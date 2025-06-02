@@ -4,6 +4,7 @@ import { AscUser } from './asc-user/asc-user';
 import { XfeUser } from './xfe-user/xfe-user';
 import { Distributor } from './distributor/distributor';
 import { Promoter } from './promoter/promoter';
+import { UploadData } from './upload-data/upload-data';
 
 const routes: Routes = [
   {
@@ -21,6 +22,10 @@ const routes: Routes = [
   {
     path:'promoter',
     component: Promoter
+  },
+  {
+    path: '',
+    component:UploadData
   }
 ];
 
