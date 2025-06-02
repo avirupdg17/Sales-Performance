@@ -8,10 +8,11 @@ router = APIRouter(prefix="/user/profile", tags=["User Profile"])
 
 @router.get("/")
 def get_profile(current_user: dict = Depends(get_current_user)):
-    username = current_user["username"]
+    username = current_user["phone"]
 
     with SalesDB() as db:
-        profile = db.get_user_profile(username)
+        # profile = db.get_user_profile(username)
+        profile = db.get_records("users", ("phone", "=", phone))
         if not profile:
             raise HTTPException(status_code=404, detail="Profile not found.")
     return profile
