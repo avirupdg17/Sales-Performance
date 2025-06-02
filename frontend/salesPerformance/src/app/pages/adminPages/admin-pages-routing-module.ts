@@ -1,0 +1,31 @@
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { AscUser } from './asc-user/asc-user';
+import { XfeUser } from './xfe-user/xfe-user';
+import { Distributor } from './distributor/distributor';
+import { Promoter } from './promoter/promoter';
+
+const routes: Routes = [
+  {
+    path:'asc',
+    component:AscUser
+  },
+  {
+    path:'xfe',
+    component:XfeUser
+  },
+  {
+    path:'distributor',
+    component:Distributor
+  },
+  {
+    path:'promoter',
+    component: Promoter
+  }
+];
+
+@NgModule({
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule]
+})
+export class AdminPagesRoutingModule { }

@@ -1,0 +1,20 @@
+table {
+    overflow: auto;
+    width: 100%;
+    display: block; /* Make the table behave like a block element for responsiveness */
+  }
+  
+  mat-card {
+    margin: 20px;
+    padding: 20px;
+    // width: 100%;
+    box-sizing: border-box;
+  }
+  
+  h2 {
+    margin-bottom: 10px;
+  }
+.column-flex{
+    display: flex;
+    flex-direction: column;
+}

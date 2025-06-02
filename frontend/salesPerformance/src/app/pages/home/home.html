@@ -1,0 +1,14 @@
+<mat-drawer-container class="app-container">
+    <!-- Sidenav -->
+    <mat-drawer mode="side" opened>
+      <app-sidenav ></app-sidenav>
+    </mat-drawer>
+  
+    <!-- Main Content -->
+    <mat-drawer-content>
+      
+      <div class="main-content">
+        <router-outlet></router-outlet>
+      </div>
+    </mat-drawer-content>
+  </mat-drawer-container>
