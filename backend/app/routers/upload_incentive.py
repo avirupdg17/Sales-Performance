@@ -30,7 +30,7 @@ async def upload_incentive_image(
     # Normalize and sanitize role
     role = role.lower()
     filename = f"incentives_{role}_{month:02d}_{year}.jpg"
-    save_dir = "app/static/assets"
+    save_dir = "app/static/assets/incentive"
     os.makedirs(save_dir, exist_ok=True)
     save_path = os.path.join(save_dir, filename)
 

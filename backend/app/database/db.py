@@ -123,7 +123,7 @@ class SalesDB:
             return {"name": name, "phone": phone, "photo": photo_base64}
         return None
 
-    def update_user_profile(self, phone: str, update_data: dict):
+    def update_user_profile(self, user_id: int, update_data: dict):
         fields = []
         values = []
         for key, value in update_data.items():
@@ -135,8 +135,8 @@ class SalesDB:
                 values.append(value)
         if not fields:
             return
-        values.append(phone)
-        sql = f"UPDATE users SET {', '.join(fields)} WHERE phone=?"
+        values.append(user_id)
+        sql = f"UPDATE users SET {', '.join(fields)} WHERE id=?"
         self.cursor.execute(sql, tuple(values))
         self.connection.commit()
 
