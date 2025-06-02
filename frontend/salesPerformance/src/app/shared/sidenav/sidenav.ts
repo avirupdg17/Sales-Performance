@@ -11,7 +11,7 @@ import { RouterModule } from '@angular/router';
 export class Sidenav {
   sectionsByRole: { [role: string]: { label: string, link: string }[] } = {
     admin: [
-      {label:'Upload Data',link:'/home/admin/'},
+      {label:'Upload Data',link:'/home/admin/upload'},
       { label: 'ASC', link: '/home/admin/asc' },
       { label: 'Distributor', link: '/home/admin/distributor' },
       { label: 'Promoter', link: '/home/admin/promoter' },

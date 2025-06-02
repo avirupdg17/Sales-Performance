@@ -24,7 +24,7 @@ const routes: Routes = [
     component: Promoter
   },
   {
-    path: '',
+    path: 'upload',
     component:UploadData
   }
 ];

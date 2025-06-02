@@ -1,6 +1,7 @@
-import { Component, Host, HostListener, OnInit } from '@angular/core';
+import { Component, Host, HostListener, inject, OnInit } from '@angular/core';
 import { MaterialModule } from '../../../shared/material-module/material-module';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-upload-data',
@@ -9,9 +10,8 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
   styleUrl: './upload-data.scss'
 })
 export class UploadData implements OnInit {
-
   uploadForm!:FormGroup;
-
+  private _snackBar = inject(MatSnackBar);
   constructor(private fb:FormBuilder){}
   ngOnInit(): void {
     this.uploadForm = this.fb.group({
@@ -42,7 +42,6 @@ export class UploadData implements OnInit {
   }
 
   selectedFiles(filesObj:any) {
-    console.log('Files selected:', filesObj);
     const selectedFile = filesObj[0];
     this.uploadForm.patchValue({file:selectedFile});
     this.uploadForm.get('file')?.updateValueAndValidity();
@@ -63,7 +62,9 @@ export class UploadData implements OnInit {
     xhr.onreadystatechange = function() {
       if(xhr.readyState === XMLHttpRequest.DONE) {
         if(xhr.status === 200) {
-          console.log('File uploaded successfully:', xhr.responseText);
+          self._snackBar.open(JSON.parse(xhr.responseText).message, 'Close', {
+            duration: 3000,
+          });
           self.uploadForm.reset();
         } else {
           console.error('Error uploading file:', xhr.status, xhr.statusText);

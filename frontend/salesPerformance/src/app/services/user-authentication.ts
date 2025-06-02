@@ -15,6 +15,7 @@ export class UserAuthentication {
     this._accessToken.next(token);
     sessionStorage.setItem('access_token', token);
     sessionStorage.setItem('sp_role', role);
+    this.setUserLoggedInStatus(true);
   }
   fetchAccessToken() {
     return this._accessToken;
@@ -23,5 +24,10 @@ export class UserAuthentication {
     const role = sessionStorage.getItem('sp_role') || '';
     return role;
   }
-
+  setUserLoggedInStatus(isLoggedIn: boolean) {
+    this._isUserLoggedIn.next(isLoggedIn);
+  }
+  hasUserLoggedIn() {
+    return this._isUserLoggedIn;
+  }
 }

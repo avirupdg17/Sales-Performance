@@ -1,6 +1,6 @@
 <mat-drawer-container class="app-container">
     <!-- Sidenav -->
-    <mat-drawer mode="side" opened>
+    <mat-drawer [mode]="drawerMode" [opened]="isSideNavOpen">
       <app-sidenav ></app-sidenav>
     </mat-drawer>
   
