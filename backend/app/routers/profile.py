@@ -199,7 +199,6 @@ def delete_user(
             except Exception as e:
                 raise HTTPException(status_code=500, detail=f"Error deleting profile photo: {str(e)}")
 
-        print(id)
         db.delete_records("users", [("id", "=", id)])
         db.delete_records("performance", [("user_id", "=", id)])
 

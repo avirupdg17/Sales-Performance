@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { Dashboard } from './dashboard/dashboard';
-import { LeaderBoard } from './leader-board/leader-board';
+import { Leaderboard } from './leader-board/leader-board';
 
 const routes: Routes = [
   {
@@ -10,7 +10,7 @@ const routes: Routes = [
   },
   {
     path:'leaderboard',
-    component:LeaderBoard
+    component:Leaderboard
   }
 ];
 

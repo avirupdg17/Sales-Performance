@@ -1,10 +1,10 @@
+import os
 from fastapi import APIRouter, Depends, HTTPException
 from datetime import datetime
 from collections import defaultdict
 from app.auth import get_current_user
 from app.database.db import SalesDB
-from app.utils.common_methods import ROLE_KPIS, MONTH_MAP, get_last_3_months
-from app.utils.image_utils import blob_to_base64
+from app.utils.common_methods import ROLE_KPIS, get_last_3_months
 
 router = APIRouter()
 
@@ -44,7 +44,6 @@ def get_leaderboards(current_user: dict = Depends(get_current_user)):
         for ym, recs in records_by_month.items():
             max_date = max(datetime.strptime(r["date"], "%Y-%m-%d") for r in recs)
             last_date_by_month[ym] = max_date.strftime("%Y-%m-%d")
-            #print(last_date_by_month)
 
         leaderboards = {}
 
@@ -62,7 +61,7 @@ def get_leaderboards(current_user: dict = Depends(get_current_user)):
                     filtered_records = [r for r in month_records if r["date"] == last_date]
                 else:
                     filtered_records = []
-            #print(filtered_records)
+
             # Aggregate user stats
             stats = defaultdict(lambda: {
                 "incentive": 0,
@@ -76,30 +75,39 @@ def get_leaderboards(current_user: dict = Depends(get_current_user)):
                 stats[uid]["jio_mnp"] += rec.get("jio_mnp", 0) or 0
                 for kpi in relevant_kpis:
                     stats[uid]["metrics"][kpi] += rec.get(kpi, 0) or 0
-            #print(stats)
+
             # Sort by incentive desc, then jio_mnp desc
             sorted_users = sorted(
                 stats.items(),
                 key=lambda x: (-x[1]["incentive"], -x[1]["jio_mnp"])
             )
-            print(sorted_users)
-            top_5 = []
-            ftop_5 = []
-        for rank, (uid, user_stats) in enumerate(sorted_users[:5], 1):
-            profile_result = db.get_records("users", [("id", "=", uid)])
-            if not profile_result:
-                continue  # skip if user not found
-            profile = profile_result[0]
 
-            top_5.append({
-                "rank": rank,
-                "user_id": uid,
-                "user_name": profile.get("name", "Unknown"),
-                "user_photo": blob_to_base64(profile.get("photo")),
-                "metrics": dict(user_stats["metrics"]),
-                "incentive": user_stats["incentive"]
-            })
-            
+            top_5 = []
+
+            for rank, (uid, user_stats) in enumerate(sorted_users[:5], 1):
+                profile_result = db.get_records("users", [("id", "=", uid)])
+                if not profile_result:
+                    continue  # skip if user not found
+                profile = profile_result[0]
+
+                # Construct photo URL/path
+                photo_relative_path = f"/static/assets/profile/{uid}_profile_icon.png"
+                # Absolute file path to check existence
+                abs_photo_path = os.path.join("app", "static", "assets", "profile", f"{uid}_profile_icon.png")
+
+                if not os.path.isfile(abs_photo_path):
+                    # fallback to default
+                    photo_relative_path = "/static/assets/profile/default_profile_icon.png"
+
+                top_5.append({
+                    "rank": rank,
+                    "user_id": uid,
+                    "user_name": profile.get("name", "Unknown"),
+                    "user_photo": photo_relative_path,
+                    "metrics": dict(user_stats["metrics"]),
+                    "incentive": user_stats["incentive"]
+                })
+
             leaderboards[f"{y}-{m:02d}"] = top_5
 
         return {

@@ -1,1 +1,36 @@
-<p>leader-board works!</p>
+<div class="leaderboard-container" *ngIf="selectedMonth">
+  <h2 class="title">{{ role | titlecase }} Leaderboard</h2>
+
+  <!-- Month Tabs -->
+  <div class="month-tabs">
+    <button
+      mat-button
+      *ngFor="let month of availableMonths"
+      [class.active]="month === selectedMonth"
+      (click)="selectMonth(month)">
+      {{ getMonthLabel(month) }}
+    </button>
+  </div>
+
+  <!-- Leaderboard Cards -->
+  <div class="leaderboard-list">
+    <mat-card *ngFor="let user of leaderboards[selectedMonth]" class="leader-card">
+      <div class="leader-header">
+        <div class="rank-badge">#{{ user.rank }}</div>
+        <img [src]="'data:image/png;base64,' + user.user_photo" alt="Photo" class="user-photo" />
+        <div class="user-name">{{ user.user_name }}</div>
+      </div>
+
+      <div class="kpi-section">
+        <div class="kpi-box" *ngFor="let kpi of user.metrics | keyvalue">
+          <div class="kpi-title">{{ castKeyToString(kpi.key) | uppercase }}</div>
+          <div class="kpi-value">{{ kpi.value }}</div>
+        </div>
+      </div>
+
+      <div class="incentive">
+        Incentive: ₹{{ user.incentive }}
+      </div>
+    </mat-card>
+  </div>
+</div>
