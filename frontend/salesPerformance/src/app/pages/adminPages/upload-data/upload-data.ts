@@ -2,15 +2,17 @@ import { Component, Host, HostListener, inject, OnInit } from '@angular/core';
 import { MaterialModule } from '../../../shared/material-module/material-module';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-upload-data',
-  imports: [MaterialModule,FormsModule,ReactiveFormsModule],
+  imports: [MaterialModule,FormsModule,ReactiveFormsModule,CommonModule],
   templateUrl: './upload-data.html',
   styleUrl: './upload-data.scss'
 })
 export class UploadData implements OnInit {
   uploadForm!:FormGroup;
+  selectedFileName: string = '';
   private _snackBar = inject(MatSnackBar);
   constructor(private fb:FormBuilder){}
   ngOnInit(): void {
@@ -21,6 +23,8 @@ export class UploadData implements OnInit {
   }
   @HostListener('drop',['$event'])
   public fileDroppedEvent(event:any) {
+    console.log('file droppedEvent', event.dataTransfer);
+    console.log('file droppedEvent', event.target);
     this.preventDefaultAndStopPropagation(event);
     let filesObj = event.target.files || event.dataTransfer.files;
     this.selectedFiles(filesObj);
@@ -45,6 +49,8 @@ export class UploadData implements OnInit {
     const selectedFile = filesObj[0];
     this.uploadForm.patchValue({file:selectedFile});
     this.uploadForm.get('file')?.updateValueAndValidity();
+    this.selectedFileName = selectedFile.name;
+    console.log('Selected File:', selectedFile);
   }
 
 
@@ -66,6 +72,7 @@ export class UploadData implements OnInit {
             duration: 3000,
           });
           self.uploadForm.reset();
+          self.selectedFileName = '';
         } else {
           console.error('Error uploading file:', xhr.status, xhr.statusText);
         }

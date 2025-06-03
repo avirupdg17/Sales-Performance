@@ -9,10 +9,12 @@
             </div>
             <div class="file-upload-section">
                 <span class="upload-data">Drag and drop your file here or click to select</span>
-                <input #fileInput type="file" name="fileSel" (change)="fileDroppedEvent($event)"/>
-                <input type="date" class="date-picker" name="selectedDate" required formControlName="selectedDate">
+                <input #fileInput type="file" name="fileSel" style="display: none;" (change)="fileDroppedEvent($event)"/>
+                <input type="date" class="date-picker" name="selectedDate"  required formControlName="selectedDate">
                 <span class="click-here" (click)="clearSelection(fileInput);fileInput.click();">
                     Click here to browse and upload file</span>
+                <div *ngIf="selectedFileName" class="file-name">
+                        Selected File: {{ selectedFileName }}</div>
                 <button mat-raised-button color="primary" [disabled]="!uploadForm.valid" (click)="uploadFile()">
                         Upload
                       </button>
