@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../../shared/material-module/material-module';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { UserAuthentication } from '../../services/user-authentication';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +17,7 @@ export class Login {
   password: string = '';
   selectedRole: string = '';
   private _snackBar = inject(MatSnackBar);
-  constructor(private http: HttpClient, private router:Router) {}
+  constructor(private http: HttpClient, private router:Router, private authService:UserAuthentication) {}
   onSubmit() {
     console.log('Username:', this.username);
     console.log('Password:', this.password);
@@ -32,8 +33,10 @@ export class Login {
         const accessToken = response.access_token;
         if (accessToken) {
           // Store the access token in sessionStorage
+          //TODO - Use the UserAuthentication service to manage access token and user role
           sessionStorage.setItem('access_token', accessToken);
           sessionStorage.setItem('sp_role', this.selectedRole);
+          this.authService.setAccessDetails(accessToken,this.selectedRole);
         }
         if(this.selectedRole !== 'Admin') {
           this.router.navigate(['home/user/dashboard']); // Navigate to the dashboard after successful login
