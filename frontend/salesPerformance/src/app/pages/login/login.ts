@@ -32,6 +32,10 @@ export class Login {
         console.log('Login successful:', response);
         const accessToken = response.access_token;
         if (accessToken) {
+          // Store the access token in sessionStorage
+          //TODO - Use the UserAuthentication service to manage access token and user role
+          sessionStorage.setItem('access_token', accessToken);
+          sessionStorage.setItem('sp_role', this.selectedRole);
           this.authService.setAccessDetails(accessToken,this.selectedRole);
         }
         if(this.selectedRole !== 'Admin') {
