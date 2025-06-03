@@ -1,5 +1,5 @@
 <mat-toolbar class="docs-navbar-header">
-  <button matIconButton class="example-icon" aria-label="Example icon-button with menu icon" (click)="toggleSideNav()">
+  <button matIconButton class="example-icon" aria-label="Example icon-button with menu icon" (click)="toggleSideNav()" *ngIf="hasUserLoggedIn">
     <mat-icon>menu</mat-icon>
   </button>
   <a matButton="text" routerLink="/" aria-label="Angular Material" class="navbar-header-button">

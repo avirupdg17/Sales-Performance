@@ -23,14 +23,16 @@ export class Home implements OnInit,OnDestroy {
       next:(response:boolean) => {this.isSideNavOpen = !this.isSideNavOpen;},
     });
     this.subscription.add(toggle$);
-    this.breakpointObserver.observe([Breakpoints.Small, Breakpoints.XSmall]).subscribe(result => {
+    const observe$ = this.breakpointObserver.observe([Breakpoints.Small, Breakpoints.XSmall]).subscribe(result => {
       if (result.matches) {
         this.drawerMode = 'over'; // Use 'over' mode for small screens
+        this.isSideNavOpen = false; // Close side nav on small screens
       } else {
         this.drawerMode = 'side'; // Use 'side' mode for larger screens
         this.isSideNavOpen = true; 
       }
     });
+    this.subscription.add(observe$);
   }
 
   ngOnDestroy(): void {

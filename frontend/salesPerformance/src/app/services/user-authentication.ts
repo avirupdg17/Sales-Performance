@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-
+//TODO - use this service to manage user authentication state, access token, and user role.
 @Injectable({
   providedIn: 'root'
 })
@@ -16,6 +16,12 @@ export class UserAuthentication {
     sessionStorage.setItem('access_token', token);
     sessionStorage.setItem('sp_role', role);
     this.setUserLoggedInStatus(true);
+  }
+  logOutUser(){
+    sessionStorage.removeItem('access_token');
+    sessionStorage.removeItem('sp_role');
+    this._accessToken.next('');
+    this.setUserLoggedInStatus(false);
   }
   fetchAccessToken() {
     return this._accessToken;
