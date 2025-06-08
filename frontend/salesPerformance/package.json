@@ -4,10 +4,10 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build && ng run salesPerformance:server",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve:ssr:salesPerformance": "node dist/salesPerformance/server/server.mjs"
+    "serve:ssr": "node dist/salesPerformance/server/server.mjs"
   },
   "private": true,
   "dependencies": {
