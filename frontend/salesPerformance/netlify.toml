@@ -1,0 +1,9 @@
+[build]
+  command = "npm run build"
+  functions = "dist/functions"
+  publish = "dist/salesPerformance/browser"
+
+[[redirects]]
+  from = "/*"
+  to = "index.html"
+  status = 200
